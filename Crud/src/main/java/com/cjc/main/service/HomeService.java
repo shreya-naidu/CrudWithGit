@@ -9,4 +9,6 @@ public interface HomeService {
 
 	Iterable<Student> getAllData(int pageNumber);
 
+	void deletestudent(int id);
+
 }
