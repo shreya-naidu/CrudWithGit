@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +23,23 @@ public class HomeController {
 
 	@Autowired
 	HomeService hs;
-	
+
 	@PostMapping("/savestudent")
-	public ResponseEntity<BaseResponse<Student>> savestudent(@RequestBody Student s) throws StudentNotFound
-	{
-		
+	public ResponseEntity<BaseResponse<Student>> savestudent(@RequestBody Student s) throws StudentNotFound {
+
 		Student student = hs.savestudent(s);
-		
-	return new ResponseEntity<BaseResponse<Student>>(new BaseResponse<Student>(201, "Student Added",
-			  new Date(), student),HttpStatus.OK);	
+
+		return new ResponseEntity<BaseResponse<Student>>(
+				new BaseResponse<Student>(201, "Student Added", new Date(), student), HttpStatus.OK);
 	}
+
+	@GetMapping("/getalldata/{pageNumber}")
+	public ResponseEntity<BaseResponse<Iterable<Student>>> getallData(@PathVariable int pageNumber) {
+
+		Iterable<Student> gd=hs.getAllData(pageNumber);
+		return new ResponseEntity<BaseResponse<Iterable<Student>>>
+		(new BaseResponse<Iterable<Student>>(200, "Data Found!!", new Date(), gd),HttpStatus.OK);
+
+	}
+
 }

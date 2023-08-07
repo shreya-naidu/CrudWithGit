@@ -7,4 +7,6 @@ public interface HomeService {
 
 	Student savestudent(Student s) throws StudentNotFound;
 
+	Iterable<Student> getAllData(int pageNumber);
+
 }
